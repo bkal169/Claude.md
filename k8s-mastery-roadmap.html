@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K8s Mastery — 90 Day Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07070e;
+    --bg2: #0d0d1a;
+    --gold: #e8b84b;
+    --gold-dim: rgba(232,184,75,0.15);
+    --gold-border: rgba(232,184,75,0.3);
+    --white: #f0eeea;
+    --muted: #6b6b80;
+    --phase1: #4b9fe8;
+    --phase2: #9b59b6;
+    --phase3: #27ae60;
+    --phase4: #e8b84b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Instrument Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 64px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(42px, 7vw, 72px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  h1 span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  .meta-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 6px 14px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-chip strong {
+    color: var(--white);
+  }
+
+  /* OUTCOMES */
+  .outcomes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 64px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .outcome-card {
+    background: var(--bg2);
+    border: 1px solid var(--gold-border);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .outcome-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .outcome-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--gold-dim);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .outcome-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--gold);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .outcome-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* PHASE SECTION */
+  .phase {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .phase:nth-child(1) { animation-delay: 0.2s; }
+  .phase:nth-child(2) { animation-delay: 0.3s; }
+  .phase:nth-child(3) { animation-delay: 0.4s; }
+  .phase:nth-child(4) { animation-delay: 0.5s; }
+
+  .phase-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .phase-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .p1 .phase-badge { background: rgba(75,159,232,0.15); color: var(--phase1); border: 1px solid rgba(75,159,232,0.3); }
+  .p2 .phase-badge { background: rgba(155,89,182,0.15); color: var(--phase2); border: 1px solid rgba(155,89,182,0.3); }
+  .p3 .phase-badge { background: rgba(39,174,96,0.15); color: var(--phase3); border: 1px solid rgba(39,174,96,0.3); }
+  .p4 .phase-badge { background: rgba(232,184,75,0.15); color: var(--phase4); border: 1px solid rgba(232,184,75,0.3); }
+
+  .phase-title-block { flex: 1; }
+
+  .phase-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .phase-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* WEEKS GRID */
+  .weeks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .week-card {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+
+  .week-card:hover {
+    border-color: var(--gold-border);
+    transform: translateY(-2px);
+  }
+
+  .week-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .week-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+
+  .task-list {
+    list-style: none;
+  }
+
+  .task-list li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+
+  .task-list li:last-child { border-bottom: none; }
+
+  .task-list li::before {
+    content: '\2192';
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* MILESTONE CARDS */
+  .milestone-strip {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .milestone {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .p1 .milestone { background: rgba(75,159,232,0.08); color: var(--phase1); border: 1px solid rgba(75,159,232,0.2); }
+  .p2 .milestone { background: rgba(155,89,182,0.08); color: var(--phase2); border: 1px solid rgba(155,89,182,0.2); }
+  .p3 .milestone { background: rgba(39,174,96,0.08); color: var(--phase3); border: 1px solid rgba(39,174,96,0.2); }
+  .p4 .milestone { background: rgba(232,184,75,0.08); color: var(--phase4); border: 1px solid rgba(232,184,75,0.2); }
+
+  /* RESOURCES */
+  .resources-section {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .resource-card {
+    background: var(--bg2);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .resource-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .resource-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
+
+  .resource-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* BOTTOM CALLOUT */
+  .callout {
+    background: linear-gradient(135deg, var(--bg2), rgba(232,184,75,0.05));
+    border: 1px solid var(--gold-border);
+    padding: 32px;
+    text-align: center;
+    animation: fadeUp 0.8s 0.7s ease both;
+  }
+
+  .callout-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--gold);
+  }
+
+  .callout-text {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+    margin: 48px 0;
+  }
+
+  /* PROGRESS TIMELINE */
+  .timeline {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 64px;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .tl-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+
+  .tl-item::after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .tl-item:last-child::after { display: none; }
+
+  .tl-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-item:nth-child(1) .tl-dot { background: rgba(75,159,232,0.2); border: 1px solid var(--phase1); color: var(--phase1); }
+  .tl-item:nth-child(2) .tl-dot { background: rgba(155,89,182,0.2); border: 1px solid var(--phase2); color: var(--phase2); }
+  .tl-item:nth-child(3) .tl-dot { background: rgba(39,174,96,0.2); border: 1px solid var(--phase3); color: var(--phase3); }
+  .tl-item:nth-child(4) .tl-dot { background: rgba(232,184,75,0.2); border: 1px solid var(--phase4); color: var(--phase4); }
+
+  .tl-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .tl-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .outcomes { grid-template-columns: 1fr; }
+    .timeline { flex-wrap: wrap; gap: 16px; }
+    .tl-item::after { display: none; }
+    .header-meta { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="eyebrow">Learning Roadmap</div>
+      <h1>K8s Mastery<span>90 Day Plan</span></h1>
+      <div class="header-meta">
+        <div class="meta-chip"><strong>Duration:</strong> 90 Days</div>
+        <div class="meta-chip"><strong>Phases:</strong> 4</div>
+        <div class="meta-chip"><strong>Level:</strong> Beginner to Advanced</div>
+        <div class="meta-chip"><strong>Goal:</strong> CKA Ready</div>
+      </div>
+    </div>
+
+    <!-- OUTCOMES -->
+    <div class="outcomes">
+      <div class="outcome-card">
+        <div class="outcome-num">01</div>
+        <div class="outcome-title">Deploy Confidently</div>
+        <div class="outcome-desc">Build, deploy, and manage production-grade Kubernetes clusters from scratch.</div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-num">02</div>
+        <div class="outcome-title">Debug Like a Pro</div>
+        <div class="outcome-desc">Troubleshoot pods, networking, storage, and RBAC issues with systematic precision.</div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-num">03</div>
+        <div class="outcome-title">Pass the CKA</div>
+        <div class="outcome-desc">Gain the skills and confidence to pass the Certified Kubernetes Administrator exam.</div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot">1</div>
+        <div class="tl-label">Weeks 1–3</div>
+        <div class="tl-name">Foundation</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">2</div>
+        <div class="tl-label">Weeks 4–6</div>
+        <div class="tl-name">Core Workloads</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">3</div>
+        <div class="tl-label">Weeks 7–10</div>
+        <div class="tl-name">Production Ops</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">4</div>
+        <div class="tl-label">Weeks 11–13</div>
+        <div class="tl-name">Mastery &amp; CKA</div>
+      </div>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="phase p1">
+      <div class="phase-header">
+        <div class="phase-badge">Phase 01</div>
+        <div class="phase-title-block">
+          <div class="phase-title">Foundation</div>
+          <div class="phase-subtitle">Weeks 1–3 &middot; Containers, Architecture &amp; First Deploys</div>
+        </div>
+      </div>
+      <div class="weeks">
+        <div class="week-card">
+          <div class="week-label">Week 1</div>
+          <div class="week-title">Containers &amp; Docker Deep Dive</div>
+          <ul class="task-list">
+            <li>Understand container fundamentals: namespaces, cgroups, layers</li>
+            <li>Write multi-stage Dockerfiles for Go/Node/Python apps</li>
+            <li>Build, tag, push images to Docker Hub &amp; private registries</li>
+            <li>Docker networking: bridge, host, overlay modes</li>
+            <li>Docker Compose for multi-container local dev</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 2</div>
+          <div class="week-title">Kubernetes Architecture</div>
+          <ul class="task-list">
+            <li>Control plane components: API server, etcd, scheduler, controller manager</li>
+            <li>Node components: kubelet, kube-proxy, container runtime</li>
+            <li>Install Minikube/kind and spin up local clusters</li>
+            <li>kubectl essentials: get, describe, logs, exec, port-forward</li>
+            <li>Understand declarative vs imperative management</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 3</div>
+          <div class="week-title">Pods, ReplicaSets &amp; Deployments</div>
+          <ul class="task-list">
+            <li>Pod lifecycle, multi-container pods, init containers</li>
+            <li>ReplicaSets: scaling and self-healing</li>
+            <li>Deployments: rolling updates, rollbacks, revision history</li>
+            <li>Labels, selectors, and annotations</li>
+            <li>Namespaces for resource isolation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone-strip">
+        <div class="milestone">Milestone: Deploy a multi-tier app on local cluster</div>
+        <div class="milestone">Milestone: Write YAML from scratch without docs</div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase p2">
+      <div class="phase-header">
+        <div class="phase-badge">Phase 02</div>
+        <div class="phase-title-block">
+          <div class="phase-title">Core Workloads</div>
+          <div class="phase-subtitle">Weeks 4–6 &middot; Services, Storage &amp; Configuration</div>
+        </div>
+      </div>
+      <div class="weeks">
+        <div class="week-card">
+          <div class="week-label">Week 4</div>
+          <div class="week-title">Services &amp; Networking</div>
+          <ul class="task-list">
+            <li>ClusterIP, NodePort, LoadBalancer service types</li>
+            <li>DNS resolution inside the cluster (CoreDNS)</li>
+            <li>Ingress controllers: NGINX, Traefik setup</li>
+            <li>Network Policies for pod-to-pod traffic control</li>
+            <li>Service meshes overview: Istio &amp; Linkerd concepts</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 5</div>
+          <div class="week-title">Storage &amp; Persistence</div>
+          <ul class="task-list">
+            <li>Volumes, PersistentVolumes, PersistentVolumeClaims</li>
+            <li>StorageClasses and dynamic provisioning</li>
+            <li>StatefulSets for stateful workloads (databases)</li>
+            <li>ConfigMaps and Secrets for configuration injection</li>
+            <li>Volume snapshots and backup strategies</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 6</div>
+          <div class="week-title">Configuration &amp; Scheduling</div>
+          <ul class="task-list">
+            <li>Resource requests and limits (CPU/memory)</li>
+            <li>LimitRanges and ResourceQuotas</li>
+            <li>Node affinity, taints, and tolerations</li>
+            <li>Pod priority and preemption</li>
+            <li>Horizontal Pod Autoscaler (HPA) setup</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone-strip">
+        <div class="milestone">Milestone: Expose app via Ingress with TLS</div>
+        <div class="milestone">Milestone: Deploy StatefulSet with persistent storage</div>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase p3">
+      <div class="phase-header">
+        <div class="phase-badge">Phase 03</div>
+        <div class="phase-title-block">
+          <div class="phase-title">Production Operations</div>
+          <div class="phase-subtitle">Weeks 7–10 &middot; Security, Observability &amp; CI/CD</div>
+        </div>
+      </div>
+      <div class="weeks">
+        <div class="week-card">
+          <div class="week-label">Week 7</div>
+          <div class="week-title">RBAC &amp; Security</div>
+          <ul class="task-list">
+            <li>RBAC: Roles, ClusterRoles, RoleBindings</li>
+            <li>ServiceAccounts and token management</li>
+            <li>Pod Security Standards (restricted, baseline, privileged)</li>
+            <li>Security contexts and seccomp profiles</li>
+            <li>Image scanning with Trivy and admission controllers</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 8</div>
+          <div class="week-title">Observability Stack</div>
+          <ul class="task-list">
+            <li>Metrics Server and kubectl top</li>
+            <li>Prometheus + Grafana monitoring stack</li>
+            <li>Centralized logging with EFK/Loki</li>
+            <li>Distributed tracing concepts (Jaeger)</li>
+            <li>Alerting rules and SLO-based dashboards</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 9</div>
+          <div class="week-title">CI/CD &amp; GitOps</div>
+          <ul class="task-list">
+            <li>Helm charts: create, template, package, deploy</li>
+            <li>Kustomize for environment-specific overlays</li>
+            <li>ArgoCD / Flux for GitOps-driven deployments</li>
+            <li>GitHub Actions / GitLab CI pipelines for K8s</li>
+            <li>Progressive delivery: canary and blue-green strategies</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 10</div>
+          <div class="week-title">Cluster Administration</div>
+          <ul class="task-list">
+            <li>kubeadm cluster bootstrap and upgrades</li>
+            <li>etcd backup and restore procedures</li>
+            <li>Certificate management and rotation</li>
+            <li>Node maintenance: cordon, drain, uncordon</li>
+            <li>Cluster autoscaling and cost optimization</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone-strip">
+        <div class="milestone">Milestone: Full observability stack on cluster</div>
+        <div class="milestone">Milestone: GitOps pipeline deploying to staging</div>
+        <div class="milestone">Milestone: Perform etcd backup &amp; restore</div>
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase p4">
+      <div class="phase-header">
+        <div class="phase-badge">Phase 04</div>
+        <div class="phase-title-block">
+          <div class="phase-title">Mastery &amp; CKA Prep</div>
+          <div class="phase-subtitle">Weeks 11–13 &middot; Advanced Patterns &amp; Exam Readiness</div>
+        </div>
+      </div>
+      <div class="weeks">
+        <div class="week-card">
+          <div class="week-label">Week 11</div>
+          <div class="week-title">Advanced Patterns</div>
+          <ul class="task-list">
+            <li>Custom Resource Definitions (CRDs) and Operators</li>
+            <li>DaemonSets, Jobs, and CronJobs deep dive</li>
+            <li>Pod Disruption Budgets for high availability</li>
+            <li>Multi-cluster strategies and federation concepts</li>
+            <li>Advanced scheduling: topology spread constraints</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 12</div>
+          <div class="week-title">Troubleshooting Mastery</div>
+          <ul class="task-list">
+            <li>Systematic debugging: CrashLoopBackOff, ImagePullBackOff</li>
+            <li>Networking troubleshooting: DNS, service connectivity</li>
+            <li>Node NotReady diagnosis and recovery</li>
+            <li>Control plane component failure scenarios</li>
+            <li>JSONPath, custom-columns, and advanced kubectl</li>
+          </ul>
+        </div>
+        <div class="week-card">
+          <div class="week-label">Week 13</div>
+          <div class="week-title">CKA Exam Simulation</div>
+          <ul class="task-list">
+            <li>Timed practice exams (killer.sh, KodeKloud)</li>
+            <li>Speed drills: imperative commands for fast answers</li>
+            <li>Bookmark essential K8s docs pages</li>
+            <li>Review weak areas from practice exam results</li>
+            <li>Exam day strategy: time management and priorities</li>
+          </ul>
+        </div>
+      </div>
+      <div class="milestone-strip">
+        <div class="milestone">Milestone: Build a custom Operator</div>
+        <div class="milestone">Milestone: Score 85%+ on practice exams</div>
+        <div class="milestone">Milestone: Pass the CKA exam</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- RESOURCES -->
+    <div class="resources-section">
+      <div class="section-label">Essential Resources</div>
+      <div class="resources-grid">
+        <div class="resource-card">
+          <div class="resource-icon">&#9781;</div>
+          <div>
+            <div class="resource-name">Kubernetes Docs</div>
+            <div class="resource-desc">Official reference &mdash; the only resource allowed during the CKA exam.</div>
+          </div>
+        </div>
+        <div class="resource-card">
+          <div class="resource-icon">&#9654;</div>
+          <div>
+            <div class="resource-name">KodeKloud / Mumshad</div>
+            <div class="resource-desc">Hands-on labs with built-in practice environments.</div>
+          </div>
+        </div>
+        <div class="resource-card">
+          <div class="resource-icon">&#9881;</div>
+          <div>
+            <div class="resource-name">killer.sh</div>
+            <div class="resource-desc">CKA exam simulator &mdash; 2 free sessions included with exam purchase.</div>
+          </div>
+        </div>
+        <div class="resource-card">
+          <div class="resource-icon">&#9000;</div>
+          <div>
+            <div class="resource-name">kind / Minikube</div>
+            <div class="resource-desc">Local cluster tools for daily hands-on practice.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALLOUT -->
+    <div class="callout">
+      <div class="callout-title">Consistency Over Intensity</div>
+      <div class="callout-text">
+        Dedicate 1–2 focused hours daily. Hands-on practice beats passive reading every time. Build something real every week and break it on purpose to learn how to fix it.
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
