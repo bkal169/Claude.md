@@ -38,7 +38,8 @@ personal, rose, jrih, axiom, lumena, aro, content, infra, intel, heart_of_junipe
 - <0.75 Junior rejects, decision shelved
 
 ## INFRASTRUCTURE
-- Supabase: ubdhpacoqmlxudcvhyuu (Postgres + pgvector)
+- Supabase: obtoinsjncbqdqgdeddl (JRIH Command Center = Brain, Postgres + pgvector)
+- Not the brain: ubdhpacoqmlxudcvhyuu (AxiomOS/JRi product backend: deals, tenants, beta_requests, billing)
 - Railway: Agent hosting
 - Vercel: Web apps (team_k9pMkrpQoIolWK5TG0xkDSXD)
 - n8n: bkalan169.app.n8n.cloud
