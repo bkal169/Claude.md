@@ -1,0 +1,9 @@
+{
+  "project": "Claude.md",
+  "repo": "bkal169/Claude.md",
+  "purpose": "Central hub for Claude Code skills, configs, and roadmaps across the JRIH fleet.",
+  "memory": [
+    { "type": "note", "content": "Skills/config source-of-truth repo: awesome-claude-code, obsidian-skills, superpowers, ui-ux-pro-max, k8s roadmap. No app runtime." },
+    { "type": "decision", "content": "This repo is canon for how agents are configured across the fleet; other repos inherit conventions from here." }
+  ]
+}
